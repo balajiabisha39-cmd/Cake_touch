@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cake Touch - Sweeten Your Day with our Treat</title>
+  <style>
+    :root {
+      --noir-deep: #111215;
+      --noir-card: #1a1c22;
+      --noir-border: #282a33;
+      --green-dark: #1e5a38;
+      --green-primary: #2e9b62;
+      --green-soft: #c8e6d0;
+      --pink-primary: #e65c83;
+      --pink-accent: #f47298;
+      --pink-soft: #ffeef3;
+      --text-light: #f5f5f7;
+      --text-muted: #9fa4b0;
+      --body-bg: #0d0e11;
+      --white: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--body-bg); color: var(--text-light); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* Top Strip */
+    .top-strip {
+      background: linear-gradient(90deg, var(--pink-primary), var(--green-dark));
+      color: #fff;
+      text-align: center;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: var(--noir-deep);
+      border-bottom: 1px solid var(--noir-border);
+      padding: 0.9rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand-group { display: flex; flex-direction: column; text-decoration: none; cursor: pointer; }
+    .brand-title { font-size: 1.6rem; font-weight: 800; letter-spacing: 1px; }
+    .brand-title .cake { color: var(--pink-primary); }
+    .brand-title .touch { color: var(--green-primary); }
+    .brand-tagline { font-size: 0.72rem; color: var(--green-soft); font-style: italic; }
+
+    .nav-links { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
+    .nav-link {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--pink-accent); }
+    
+    .nav-btn {
+      background: var(--pink-primary);
+      color: #fff !important;
+      padding: 0.45rem 1rem;
+      border-radius: 8px;
+    }
+    .nav-btn:hover { background: var(--pink-accent); }
+
+    .nav-add-btn {
+      background: var(--green-dark);
+      color: var(--green-soft) !important;
+      border: 1px solid var(--green-primary);
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+    }
+    .nav-add-btn:hover { background: var(--green-primary); color: #fff !important; }
+
+    /* Main Container */
+    .main-content { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; flex: 1; width: 100%; }
+    .page-section { display: none; }
+    .page-section.active { display: block; animation: fadeIn 0.2s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Hero */
+    .hero {
+      background: radial-gradient(circle at top left, rgba(230, 92, 131, 0.16), transparent 60%),
+                  radial-gradient(circle at bottom right, rgba(46, 155, 98, 0.16), transparent 60%),
+                  var(--noir-card);
+      border: 1px solid var(--noir-border);
+      border-radius: 16px;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .hero-tag { color: var(--pink-accent); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; }
+    .hero h1 { font-size: 2.4rem; margin: 0.5rem 0; }
+    .hero p { color: var(--text-muted); font-size: 1.05rem; max-width: 750px; margin: 0.8rem auto 1.5rem; line-height: 1.6; }
+    .pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin-bottom: 1.6rem; }
+    .pill { padding: 0.35rem 0.85rem; border-radius: 999px; font-size: 0.82rem; font-weight: 700; }
+    .pill-pink { background: rgba(230,92,131,0.15); color: var(--pink-accent); border: 1px solid rgba(230,92,131,0.3); }
+    .pill-green { background: rgba(46,155,98,0.15); color: var(--green-primary); border: 1px solid rgba(46,155,98,0.3); }
+
+    /* Headings */
+    .section-head { margin-bottom: 2rem; border-bottom: 1px solid var(--noir-border); padding-bottom: 1rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; }
+    .section-head h2 { font-size: 1.85rem; color: #fff; }
+    .section-head p { color: var(--text-muted); margin-top: 0.3rem; font-size: 0.95rem; }
+
+    /* Product Grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.6rem; }
+    .card {
+      background: var(--noir-card);
+      border: 1px solid var(--noir-border);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: var(--pink-primary); }
+    .card-img { width: 100%; height: 210px; object-fit: cover; background: #000; }
+    .card-body { padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .tags { display: flex; gap: 0.4rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+    .badge { font-size: 0.7rem; font-weight: 800; padding: 0.2rem 0.5rem; border-radius: 4px; text-transform: uppercase; }
+    .badge-sig { background: var(--pink-primary); color: #fff; }
+    .badge-diet { background: rgba(46,155,98,0.2); color: var(--green-primary); }
+    .card-title { font-size: 1.2rem; color: #fff; margin-bottom: 0.4rem; font-weight: 700; }
+    .card-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 1.2rem; flex-grow: 1; }
+    .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--noir-border); padding-top: 0.9rem; }
+    .price { font-size: 1.15rem; font-weight: 800; color: var(--green-primary); }
+    .action-btn {
+      background: var(--pink-primary);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    .action-btn:hover { background: var(--pink-accent); }
+
+    /* Order & QR Page */
+    .order-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; }
+    @media (max-width: 850px) { .order-layout { grid-template-columns: 1fr; } }
+    .panel { background: var(--noir-card); border: 1px solid var(--noir-border); border-radius: 14px; padding: 1.8rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--text-light); }
+    .form-input {
+      width: 100%;
+      background: var(--noir-deep);
+      border: 1px solid var(--noir-border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: #fff;
+      outline: none;
+      font-size: 0.95rem;
+    }
+    .form-input:focus { border-color: var(--pink-primary); }
+
+    .qr-box {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .qr-img { width: 220px; height: 220px; border-radius: 8px; border: 3px solid #111; padding: 4px; }
+    .upi-pill {
+      display: inline-block;
+      background: #f1f3f6;
+      color: #111;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-family: monospace;
+      font-weight: 700;
+      margin-top: 0.8rem;
+      font-size: 0.88rem;
+      border: 1px dashed #555;
+      word-break: break-all;
+    }
+
+    /* Modal for Adding Item */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+    }
+    .modal-overlay.open { display: flex; animation: fadeIn 0.2s ease; }
+    .modal-card {
+      background: var(--noir-card);
+      border: 1px solid var(--pink-primary);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 550px;
+      padding: 2rem;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(230, 92, 131, 0.2);
+    }
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--noir-border);
+      padding-bottom: 0.8rem;
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+    .close-btn:hover { color: #fff; }
+
+    /* Footer */
+    footer {
+      background: var(--noir-deep);
+      border-top: 1px solid var(--noir-border);
+      padding: 2.5rem 1.5rem 1.5rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--noir-border); }
+    .footer-col h4 { color: #fff; font-size: 1.1rem; margin-bottom: 0.8rem; }
+    .footer-col p { line-height: 1.6; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement -->
+  <div class="top-strip">
+    ✨ Free Candles & Sturdy Box Packing with Every Cake! | Closed on Sundays ✨
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="brand-group" onclick="showPage('home')">
+      <div class="brand-title"><span class="cake">CAKE</span> <span class="touch">TOUCH</span></div>
+      <div class="brand-tagline">"Sweeten Your Day with our Treat"</div>
+    </div>
+    <div class="nav-links">
+      <button class="nav-link active" onclick="showPage('home')">Home</button>
+      <button class="nav-link" onclick="showPage('cakes')">Cakes</button>
+      <button class="nav-link" onclick="showPage('snacks')">Puffs & Rolls</button>
+      <button class="nav-link" onclick="showPage('desserts')">Desserts</button>
+      <button class="nav-link" onclick="showPage('contact')">Shop Info</button>
+      <button class="nav-link nav-add-btn" onclick="openAddItemModal()">➕ Add New Item</button>
+      <button class="nav-link nav-btn" onclick="showPage('order')">Order & Pay</button>
+    </div>
+  </nav>
+
+  <div class="main-content">
+
+    <!-- PAGE 1: HOME -->
+    <section id="page-home" class="page-section active">
+      <div class="hero">
+        <div class="hero-tag">Tondiarpet, Chennai</div>
+        <h1>Welcome to Cake Touch</h1>
+        <p>Fresh oven bakes prepared daily. Signature celebration cakes, freshly rolled puffs stuffed with authentic spiced fillings, cupcakes, and donuts.</p>
+        <div class="pills">
+          <span class="pill pill-pink">🎂 ½ kg ₹450 | 1 kg ₹850</span>
+          <span class="pill pill-green">🕒 3:00 PM – 10:00 PM (Mon–Sat)</span>
+          <span class="pill pill-pink">📦 Free Packing & Birthday Candles</span>
+          <span class="pill pill-green">🚫 Closed on Sundays</span>
+        </div>
+        <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+          <button class="action-btn" style="padding:0.75rem 1.6rem; font-size:1rem;" onclick="showPage('order')">🛒 Order Online & Pay</button>
+          <button class="action-btn" style="background:var(--green-dark); padding:0.75rem 1.6rem; font-size:1rem;" onclick="openAddItemModal()">➕ Add Item to Shop</button>
+          <a href="tel:9677255076" class="action-btn" style="background:#2e9b62; padding:0.75rem 1.6rem; font-size:1rem;">📞 Call: 96772 55076</a>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <div>
+          <h2>⭐ Signature Special Items</h2>
+          <p>Freshly baked crowd favorites made every afternoon.</p>
+        </div>
+        <button class="action-btn" onclick="openAddItemModal()">➕ Add New Item</button>
+      </div>
+
+      <div class="grid" id="home-grid">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- PAGE 2: CAKES -->
+    <section id="page-cakes" class="page-section">
+      <div class="section-head">
+        <div>
+          <h2>Fresh Celebration Cakes</h2>
+          <p>All cakes available in ½ kg (₹450) and 1 kg (₹850). Free candles & box packaging included.</p>
+        </div>
+        <button class="action-btn" onclick="openAddItemModal('cakes')">➕ Add Cake</button>
+      </div>
+      <div class="grid" id="cakes-grid">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- PAGE 3: PUFFS & ROLLS -->
+    <section id="page-snacks" class="page-section">
+      <div class="section-head">
+        <div>
+          <h2>Hot Evening Snacks</h2>
+          <p>Fresh out of the oven every afternoon starting at 3:00 PM.</p>
+        </div>
+        <button class="action-btn" onclick="openAddItemModal('snacks')">➕ Add Snack</button>
+      </div>
+      <div class="grid" id="snacks-grid">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- PAGE 4: DESSERTS -->
+    <section id="page-desserts" class="page-section">
+      <div class="section-head">
+        <div>
+          <h2>Cupcakes & Glazed Donuts</h2>
+          <p>Single-serve freshly glazed treats and cupcakes ready from 3:00 PM.</p>
+        </div>
+        <button class="action-btn" onclick="openAddItemModal('desserts')">➕ Add Dessert</button>
+      </div>
+      <div class="grid" id="desserts-grid">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- PAGE 5: SHOP INFO & CONTACT -->
+    <section id="page-contact" class="page-section">
+      <div class="section-head">
+        <div>
+          <h2>Store Hours & Contact Information</h2>
+          <p style="color:var(--pink-accent); font-style:italic;">"Sweeten Your Day with our Treat"</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem;">
+        <div class="panel">
+          <h3 style="color:var(--pink-primary); margin-bottom:0.8rem;">📍 Shop Address</h3>
+          <p style="font-size:1.05rem; line-height:1.7;">
+            <strong>Cake Touch</strong><br>
+            New no : 29/4, Old No:15/4,<br>
+            Thandavaraya Gramini Street,<br>
+            Tondiarpet, Chennai - 600081
+          </p>
+          <a href="https://maps.google.com/?q=Thandavaraya+Gramini+Street,+Tondiarpet,+Chennai+-+600081" target="_blank" class="action-btn" style="margin-top:1rem;">🗺️ Open in Google Maps</a>
+        </div>
+
+        <div class="panel">
+          <h3 style="color:var(--green-primary); margin-bottom:0.8rem;">🕒 Working Hours</h3>
+          <p style="line-height:1.7;">
+            <strong>Monday to Saturday:</strong><br>
+            <span style="font-size:1.2rem; font-weight:700; color:var(--green-primary);">3:00 PM – 10:00 PM</span>
+          </p>
+          <p style="margin-top:0.8rem; line-height:1.7;">
+            <strong>Sunday:</strong><br>
+            <span style="font-size:1.1rem; font-weight:700; color:var(--pink-primary);">Shop Holiday / Closed</span>
+          </p>
+        </div>
+
+        <div class="panel">
+          <h3 style="color:var(--pink-primary); margin-bottom:0.8rem;">📞 Direct Call & WhatsApp</h3>
+          <p style="margin-bottom:0.8rem; color:var(--text-muted);">Reach us directly for advance orders or photo cake designs:</p>
+          <a href="tel:9677255076" class="action-btn" style="display:inline-block; margin-bottom:0.5rem;">📱 Call: 96772 55076</a><br>
+          <a href="tel:7550198651" class="action-btn" style="background:#2e9b62; display:inline-block; margin-bottom:0.5rem;">📱 Call: 75501 98651</a><br>
+          <a href="https://wa.me/919677255076?text=Hi%20Cake%20Touch,%20I%20want%20to%20place%20an%20order" target="_blank" class="action-btn" style="background:#25d366;">💬 WhatsApp Us</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 6: ORDER & UPI PAYMENT -->
+    <section id="page-order" class="page-section">
+      <div class="section-head">
+        <div>
+          <h2>🛒 Select Items & Instant UPI Payment</h2>
+          <p>Pick items, calculate bill, and scan the dynamic QR code for instant UPI settlement.</p>
+        </div>
+      </div>
+
+      <div class="order-layout">
+        <!-- Order Form -->
+        <div class="panel">
+          <h3 style="color:var(--pink-accent); margin-bottom:1.2rem;">1. Select Your Items</h3>
+          
+          <div class="form-group">
+            <label>Customer Name</label>
+            <input type="text" id="custName" class="form-input" placeholder="Enter your name" value="Customer">
+          </div>
+
+          <div class="form-group">
+            <label>Mobile Number (WhatsApp)</label>
+            <input type="tel" id="custPhone" class="form-input" placeholder="e.g. 9677255076" value="9677255076">
+          </div>
+
+          <div class="form-group">
+            <label>Select Item (Includes Custom Added Items)</label>
+            <select id="itemSelect" class="form-input" onchange="calculateBill()">
+              <!-- Options loaded dynamically -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" id="itemQty" class="form-input" value="1" min="1" max="50" onchange="calculateBill()" oninput="calculateBill()">
+          </div>
+
+          <div style="border-top:1px solid var(--noir-border); padding-top:1rem; margin-top:1rem;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; color:var(--text-muted);">
+              <span>Candles & Box Packing:</span>
+              <span style="color:var(--green-primary); font-weight:700;">FREE (₹0)</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:1.3rem; font-weight:800;">
+              <span>Total Payable:</span>
+              <span id="billTotal" style="color:var(--green-primary);">₹0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- QR Scanner Box -->
+        <div class="panel" style="text-align:center;">
+          <h3 style="color:var(--green-primary); margin-bottom:0.5rem;">2. Scan with Any UPI App</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">GPay • PhonePe • Paytm • BHIM</p>
+
+          <div class="qr-box">
+            <img id="qrImage" class="qr-img" src="" alt="Cake Touch UPI QR">
+            <div class="upi-pill">sasiraji142019-1@okhdfcbank</div>
+          </div>
+
+          <div style="margin-top:1.2rem;">
+            <a id="upiDeepLink" href="#" class="action-btn" style="display:block; padding:0.75rem; font-size:1rem;">
+              📱 Pay on Phone (Direct UPI)
+            </a>
+            <a id="whatsappShare" href="#" target="_blank" class="action-btn" style="background:#25d366; display:block; padding:0.75rem; font-size:0.95rem; margin-top:0.6rem;">
+              💬 Share Order Screenshot on WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ADD NEW ITEM MODAL (ADMIN / SHOP OWNER) -->
+  <div class="modal-overlay" id="addItemModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 style="color:var(--pink-accent); font-size:1.3rem;">➕ Add New Item to Shop</h3>
+        <button class="close-btn" onclick="closeAddItemModal()">&times;</button>
+      </div>
+
+      <form onsubmit="handleAddNewItem(event)">
+        <div class="form-group">
+          <label>Item Name *</label>
+          <input type="text" id="newItemName" class="form-input" placeholder="e.g. Butterscotch Cake, Paneer Roll" required>
+        </div>
+
+        <div class="form-group">
+          <label>Category *</label>
+          <select id="newItemCategory" class="form-input" required>
+            <option value="cakes">Cakes</option>
+            <option value="snacks">Puffs & Rolls (Hot Snacks)</option>
+            <option value="desserts">Desserts (Cupcakes & Donuts)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Price in Rupees (₹) *</label>
+          <input type="number" id="newItemPrice" class="form-input" placeholder="e.g. 450, 25, 30" min="1" required>
+        </div>
+
+        <div class="form-group">
+          <label>Badge / Tag</label>
+          <input type="text" id="newItemBadge" class="form-input" placeholder="e.g. Signature, Fresh Daily, Pure Veg" value="New Item">
+        </div>
+
+        <div class="form-group">
+          <label>Description *</label>
+          <textarea id="newItemDesc" class="form-input" rows="2" placeholder="Briefly describe the bakery item" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Photo Image URL (Optional)</label>
+          <input type="url" id="newItemImg" class="form-input" placeholder="Paste image link or leave blank for auto default">
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:0.8rem; margin-top:1.5rem;">
+          <button type="button" class="action-btn" style="background:#444;" onclick="closeAddItemModal()">Cancel</button>
+          <button type="submit" class="action-btn" style="background:var(--green-primary);">Save & Publish Item</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>CAKE TOUCH</h4>
+        <p style="color:var(--pink-accent); font-style:italic;">"Sweeten Your Day with our Treat"</p>
+        <p>Fresh oven daily bakes: celebration cakes, hot puffs, rolls, and sweet cupcakes in Tondiarpet, Chennai.</p>
+      </div>
+      <div class="footer-col">
+        <h4>📍 Shop Address</h4>
+        <p>New no : 29/4, Old No:15/4,<br>Thandavaraya Gramini Street,<br>Tondiarpet, Chennai - 600081</p>
+      </div>
+      <div class="footer-col">
+        <h4>📞 Contact & UPI</h4>
+        <p><strong>Phones:</strong> 9677255076 / 7550198651</p>
+        <p><strong>UPI ID:</strong> sasiraji142019-1@okhdfcbank</p>
+        <p><strong>Hours:</strong> 3:00 PM – 10:00 PM (Sunday Closed)</p>
+      </div>
+    </div>
+    <div style="text-align:center; font-size:0.82rem; margin-top:1.5rem; color:#777;">
+      © 2026 Cake Touch Bakery. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    const UPI_ID = "sasiraji142019-1@okhdfcbank";
+    const PAYEE_NAME = "Cake Touch";
+
+    // Standard Default Menu
+    const initialItems = [
+      // Cakes
+      { id: "c1", name: "Chocolate Cake (½ kg)", category: "cakes", price: 450, priceText: "₹450 (½ kg)", badge: "Signature", signature: true, desc: "Rich dark chocolate ganache cake. Free birthday candles & packing.", img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600" },
+      { id: "c1_full", name: "Chocolate Cake (1 kg)", category: "cakes", price: 850, priceText: "₹850 (1 kg)", badge: "Signature", signature: false, desc: "1 kg pure Belgian dark chocolate truffle celebration cake.", img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600" },
+      { id: "c2", name: "Rasmalai Cake (½ kg)", category: "cakes", price: 450, priceText: "₹450 (½ kg)", badge: "Signature", signature: true, desc: "Cardamom sponge soaked in saffron milk and layered with real rasmalai.", img: "https://brownbearbakers.com/cdn/shop/files/ChatGPT_Image_Jul_10_2026_04_32_51_PM.png?v=1783681414" },
+      { id: "c2_full", name: "Rasmalai Cake (1 kg)", category: "cakes", price: 850, priceText: "₹850 (1 kg)", badge: "Signature", signature: false, desc: "1 kg authentic royal rasmalai celebration cake.", img: "https://brownbearbakers.com/cdn/shop/files/ChatGPT_Image_Jul_10_2026_04_32_51_PM.png?v=1783681414" },
+      { id: "c3", name: "Fruit Jelly Cake (½ kg)", category: "cakes", price: 450, priceText: "₹450 (½ kg)", badge: "Kids Favorite", signature: false, desc: "Refreshing fruit jelly top coat with light vanilla cream.", img: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600" },
+      { id: "c4", name: "Fresh Cream Cake (½ kg)", category: "cakes", price: 450, priceText: "₹450 (½ kg)", badge: "Fresh Daily", signature: false, desc: "Whipped fresh dairy cream with vanilla sponge and cherry garnish.", img: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600" },
+      { id: "c5", name: "Custom Design / Photo Cake (½ kg)", category: "cakes", price: 450, priceText: "₹450 (½ kg)", badge: "Customized", signature: false, desc: "Personalized custom design and edible image print cakes.", img: "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=600" },
+
+      // Snacks
+      { id: "s1", name: "Egg Puff", category: "snacks", price: 20, priceText: "₹20", badge: "Signature", signature: true, desc: "Crisp, golden laminated pastry with spicy slow-cooked boiled egg masala.", img: "https://butfirstchai.com/wp-content/uploads/2022/05/kerala-egg-puffs-recipe.jpg" },
+      { id: "s2", name: "Veg Puff", category: "snacks", price: 15, priceText: "₹15", badge: "Pure Veg", signature: false, desc: "Crispy puff filled with seasoned potatoes, carrots, and green peas.", img: "https://carveyourcraving.com/wp-content/uploads/2021/11/veg-puff.jpg" },
+      { id: "s3", name: "Chicken Puff", category: "snacks", price: 25, priceText: "₹25", badge: "Non-Veg", signature: false, desc: "Shredded chicken sautéed in black pepper and south Indian spices.", img: "https://nishkitchen.com/wp-content/uploads/2019/01/Chicken-Puff-1B.jpg" },
+      { id: "s4", name: "Veg Roll", category: "snacks", price: 20, priceText: "₹20", badge: "Pure Veg", signature: false, desc: "Baked soft bread roll filled with savory spiced mixed vegetables.", img: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?w=600" },
+      { id: "s5", name: "Chicken Roll", category: "snacks", price: 30, priceText: "₹30", badge: "Non-Veg", signature: false, desc: "Juicy roasted chicken chunks wrapped in soft golden pastry dough.", img: "https://www.indianhealthyrecipes.com/wp-content/uploads/2024/02/chicken-kathi-roll-chicken-frankie.jpg" },
+
+      // Desserts
+      { id: "d1", name: "Chocolate Cupcake", category: "desserts", price: 30, priceText: "₹30", badge: "Fresh Daily", signature: false, desc: "Moist chocolate sponge piped with rich chocolate buttercream.", img: "https://inbloombakery.com/wp-content/uploads/2021/09/Chocolate-Cupcakes-New-3-22.jpg" },
+      { id: "d2", name: "Vanilla Cupcake", category: "desserts", price: 30, priceText: "₹30", badge: "Vegetarian", signature: false, desc: "Vanilla sponge crowned with whipped vanilla bean swirl.", img: "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?w=600" },
+      { id: "d3", name: "Glazed Donut", category: "desserts", price: 20, priceText: "₹20", badge: "Fresh Batch", signature: false, desc: "Fluffy fried ring donuts dipped in silky glossy sugar glaze.", img: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_400/RX_THUMBNAIL/IMAGES/VENDOR/2024/9/26/0d47649c-3715-4f15-8c70-22bd40396e69_960105.jpg" }
+    ];
+
+    // Load from LocalStorage or initialize
+    function getStoredItems() {
+      const saved = localStorage.getItem("cake_touch_items");
+      return saved ? JSON.parse(saved) : initialItems;
+    }
+
+    let itemsCatalog = getStoredItems();
+
+    function renderAllCatalogs() {
+      const homeGrid = document.getElementById("home-grid");
+      const cakesGrid = document.getElementById("cakes-grid");
+      const snacksGrid = document.getElementById("snacks-grid");
+      const dessertsGrid = document.getElementById("desserts-grid");
+      const itemSelect = document.getElementById("itemSelect");
+
+      homeGrid.innerHTML = "";
+      cakesGrid.innerHTML = "";
+      snacksGrid.innerHTML = "";
+      dessertsGrid.innerHTML = "";
+      itemSelect.innerHTML = "";
+
+      // Group items for select dropdown
+      const optgroups = {
+        cakes: document.createElement("optgroup"),
+        snacks: document.createElement("optgroup"),
+        desserts: document.createElement("optgroup")
+      };
+      optgroups.cakes.label = "🎂 Cakes";
+      optgroups.snacks.label = "🥐 Puffs & Rolls";
+      optgroups.desserts.label = "🍩 Desserts & Cupcakes";
+
+      itemsCatalog.forEach(item => {
+        const cardHtml = `
+          <div class="card">
+            <img class="card-img" src="${item.img}" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600'">
+            <div class="card-body">
+              <div class="tags">
+                ${item.signature ? '<span class="badge badge-sig">Signature</span>' : ''}
+                <span class="badge badge-diet">${item.badge || 'Bakery Special'}</span>
+              </div>
+              <h3 class="card-title">${item.name}</h3>
+              <p class="card-desc">${item.desc}</p>
+              <div class="card-footer">
+                <span class="price">${item.priceText || '₹' + item.price}</span>
+                <button class="action-btn" onclick="quickOrder('${item.name}')">Order</button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        if (item.signature) homeGrid.innerHTML += cardHtml;
+        if (item.category === "cakes") cakesGrid.innerHTML += cardHtml;
+        if (item.category === "snacks") snacksGrid.innerHTML += cardHtml;
+        if (item.category === "desserts") dessertsGrid.innerHTML += cardHtml;
+
+        // Populate order select options
+        const opt = document.createElement("option");
+        opt.value = item.price;
+        opt.innerText = `${item.name} - ₹${item.price}`;
+        if (optgroups[item.category]) optgroups[item.category].appendChild(opt);
+      });
+
+      itemSelect.appendChild(optgroups.cakes);
+      itemSelect.appendChild(optgroups.snacks);
+      itemSelect.appendChild(optgroups.desserts);
+
+      calculateBill();
+    }
+
+    // Modal controllers
+    function openAddItemModal(category = "cakes") {
+      document.getElementById("newItemCategory").value = category;
+      document.getElementById("addItemModal").classList.add("open");
+    }
+
+    function closeAddItemModal() {
+      document.getElementById("addItemModal").classList.remove("open");
+    }
+
+    function handleAddNewItem(e) {
+      e.preventDefault();
+      const name = document.getElementById("newItemName").value.trim();
+      const category = document.getElementById("newItemCategory").value;
+      const price = parseFloat(document.getElementById("newItemPrice").value);
+      const badge = document.getElementById("newItemBadge").value.trim() || "Fresh Addition";
+      const desc = document.getElementById("newItemDesc").value.trim();
+      let img = document.getElementById("newItemImg").value.trim();
+
+      if (!img) {
+        if (category === "cakes") img = "https://images.unsplash.com/photo-1535141192574-5d4897c13136?w=600";
+        else if (category === "snacks") img = "https://carveyourcraving.com/wp-content/uploads/2021/11/veg-puff.jpg";
+        else img = "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?w=600";
+      }
+
+      const newItem = {
+        id: "custom_" + Date.now(),
+        name: name,
+        category: category,
+        price: price,
+        priceText: `₹${price}`,
+        badge: badge,
+        signature: false,
+        desc: desc,
+        img: img
+      };
+
+      itemsCatalog.push(newItem);
+      localStorage.setItem("cake_touch_items", JSON.stringify(itemsCatalog));
+
+      renderAllCatalogs();
+      closeAddItemModal();
+      showPage(category);
+      alert(`Success! "${name}" has been added to ${category.toUpperCase()} and the Order System.`);
+    }
+
+    function showPage(pageId) {
+      document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
+
+      const target = document.getElementById('page-' + pageId);
+      if (target) target.classList.add('active');
+
+      const links = document.querySelectorAll('.nav-links button');
+      links.forEach(l => {
+        if (l.getAttribute('onclick') && l.getAttribute('onclick').includes(pageId)) {
+          l.classList.add('active');
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function quickOrder(itemName) {
+      showPage('order');
+      const select = document.getElementById('itemSelect');
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].text.includes(itemName)) {
+          select.selectedIndex = i;
+          break;
+        }
+      }
+      calculateBill();
+    }
+
+    function calculateBill() {
+      const select = document.getElementById('itemSelect');
+      if (!select || !select.options[select.selectedIndex]) return;
+
+      const unitPrice = parseFloat(select.value) || 0;
+      const qty = parseInt(document.getElementById('itemQty').value) || 1;
+      const total = unitPrice * qty;
+      const selectedText = select.options[select.selectedIndex].text.split(' - ')[0];
+
+      document.getElementById('billTotal').innerText = '₹' + total;
+
+      // UPI Protocol URI
+      const upiUri = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(PAYEE_NAME)}&am=${total.toFixed(2)}&cu=INR&tn=${encodeURIComponent('CakeTouch_' + selectedText)}`;
+      
+      // Dynamic QR Code using QRServer API
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(upiUri)}`;
+      document.getElementById('qrImage').src = qrUrl;
+      document.getElementById('upiDeepLink').href = upiUri;
+
+      // WhatsApp Forwarding
+      const custName = document.getElementById('custName').value || 'Customer';
+      const waMsg = `Hello Cake Touch!%0AOrder Details:%0AName: ${encodeURIComponent(custName)}%0AItem: ${encodeURIComponent(selectedText)} x ${qty}%0ATotal Paid: Rs.${total}%0APayment UPI: ${UPI_ID}`;
+      document.getElementById('whatsappShare').href = `https://wa.me/919677255076?text=${waMsg}`;
+    }
+
+    window.addEventListener('DOMContentLoaded', renderAllCatalogs);
+  </script>
+</body>
+</html>
